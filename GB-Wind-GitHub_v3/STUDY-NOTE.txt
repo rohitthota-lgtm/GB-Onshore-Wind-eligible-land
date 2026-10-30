@@ -1,0 +1,45 @@
+GB WIND EVIDENCE — UPDATED SPATIAL SCREENING METHOD
+Updated 30 October 2026. Settlement-controls-only release. Other defaults remain unchanged.
+
+Purpose
+Estimate the proportion of sampled GB land passing selected spatial constraints and a minimum wind-farm size proxy. Passing land is not confirmed buildable land, ownership parcels or consented projects.
+
+Inputs
+ONS December 2025 country boundaries; uploaded GBR_wind-speed_150m.tif (150 m inferred from filename, provider and vintage unconfirmed); OS Terrain 50; uploaded National Parks, National Landscapes/AONBs and Scottish National Scenic Areas; OS Open Built Up Areas (8,716 features, GeoPackage last change 20 July 2026); and uploaded NATS primary/secondary radar, air–ground communications and navigation-aid polygons. NATS model vintage is unconfirmed.
+
+Defaults
+Wind at least 7 m/s at 150 m. Terrain slope no more than 15 degrees. Mapped protected landscapes excluded. Built-up areas excluded with country-specific screening buffers: England 600 m; Wales 500 m; Scotland 600 m. NATS overlaps flagged, with primary radar assessed at 120 m blade-tip height. Minimum wind-farm size 10 MW at the fixed assumption of 10 MW per km² of full layout area. This means at least 1 km², or 16 connected 250 m cells.
+
+Method
+Use a 250 m British National Grid. Country, landscape and NATS membership is sampled at cell centres. Wind is sampled bilinearly; terrain uses the maximum of 25 underlying 50 m slopes. Settlement buffers use approximate raster distances. Combine active exclusions once, then group retained cells sharing edges and remove groups below the size threshold. Diagonal contact does not connect areas. Divide qualifying area by all sampled country-mask area in the selected scope. Country polygons include inland waters; connected areas can cross national borders. Flag-only overlaps remain in passing land. Missing information needed by an active exclusion cannot pass; wholly unassessed categories do not establish clearance.
+
+Spatial results BEFORE project allowances
+GB 44.1% (101,536.8 km²); England 41.4% (53,951.6 km²); Wales 39.4% (8,197.9 km²); Scotland 50.0% (39,387.2 km²); England & Wales 41.1% (62,149.5 km²). All NATS excluded: 17.7% GB. These are screening scenarios, not forecasts. NATS consultation zones are not automatic no-go areas.
+
+Limits
+Heritage, ecology/peat, isolated dwellings, full airport/MOD coverage, low flying, private communications, water/flooding, access, land rights and economics are unassessed. Project allowances are described in the REPD update below; no actual project boundaries are available. Grid connection is outside scope. No turbine layouts, energy yield, wake effects or deliverable capacity are calculated. Buffers and designation exclusions are scenario assumptions, not statutory rules. Narrow cell connections may not support practical layouts. Source snapshots and the 250 m resolution limit precision. Radar bands above 200 m remain provisional.
+
+Interpretation
+Use “land passing the selected spatial screen” to describe the percentage. A review flag is not an objection, and absence of a mapped flag is not clearance. The 150 m wind input is independent of radar tip height. Full layout area differs from turbine-foundation footprint. ECIU uses 9 MW/km² for context; this model uses the requested 10 MW/km².
+
+Country-specific settlement assumptions
+England 600 m: Arup South Warwickshire Local Plan Climate Evidence, 7 May 2024, uses 600 m around major settlements. This is a local strategic screening precedent, not a national setback. EN-3 (2025), paragraph 2.12.16, addresses appropriate residential separation case by case.
+Wales 500 m: Welsh Government Planning for Renewable and Low Carbon Energy: A Toolkit for Planners (September 2015), page 139, proposes 500 m around dwellings for a 2 MW machine. Here it is adapted to built-up areas; adequacy for larger turbines is not established. The toolkit itself distinguishes screening buffers from noise limits.
+Scotland 600 m: dashboard modelling assumption matching England's starting distance; not a Scottish Government-prescribed setback. NPF4 Policy 11(e) requires assessment of residential amenity, visual impact, noise and shadow flicker. The older up-to-2 km community separation approach was for visual assessment, not a prohibition. NPF4 replaced Scottish Planning Policy.
+The cell's country selects the buffer. Distance is to the nearest mapped GB built-up area, including across national borders. A country border does not trigger a buffer by itself. Distances use the existing approximate 250 m raster. Built-up areas do not cover all individual dwellings. Controls accept 0-10,000 m and retain Off / Flag only / Exclude. Reset settlement distances changes only these three values. Save a copy, metadata and CSV exports preserve all three settings.
+Sources:
+https://www.southwarwickshire.org.uk/doc/213168/name/Task%203%20Decentralised%20energy%20report%20ISSUED.pdf
+https://www.gov.uk/government/publications/national-policy-statement-for-renewable-energy-infrastructure-en-3-2025/national-policy-statement-for-renewable-energy-infrastructure-en-3-2025-accessible-webpage
+https://www.gov.wales/sites/default/files/publications/2018-09/renewable-energy-toolkit.pdf
+https://www.gov.scot/publications/national-planning-framework-4/pages/3/
+https://www.gov.scot/publications/onshore-wind-planning-faq/
+
+
+REPD PROJECT LAYER — 30 OCTOBER 2026
+Only the supplied "Onshore Wind - REPD Q2 2026" sheet is used. Filter: GB (England, Wales, Scotland), Wind Onshore, recorded Installed Capacity (MWelec) >=10 MW or blank, and active development statuses.
+650 records: 335 Operational, 26 Under Construction, 289 Planned / other active. Planned includes Planning Application Submitted, Planning Permission Granted, Appeal Granted, Secretary of State - Granted and No Application Required. The latter does not establish whether a project is operating. Revised, refused, withdrawn, expired, abandoned and decommissioned records are excluded. IDs are unique but separate records may refer to related physical sites or repowering phases; summed capacities are not net additions.
+646 records have usable coordinates; 41 have blank capacity; four have no coordinates. Missing-coordinate records remain in lists and counts. Blank capacity is never treated as zero or imputed. Neither gap receives an area allowance. Sub-10 MW known-capacity projects are deliberately outside this layer.
+All three project-group allowances default to Exclude, independently switchable to Flag only or Off. Display switches only change marker/circle visibility. For known capacity and coordinates, estimated full layout area = MW / 10 km², represented by a circle around the supplied BNG coordinate; radius = sqrt(MW / 10 / pi) km. These are assumptions, not project boundaries or setbacks. White-centred markers have unknown capacity. Circle overlaps are unioned at 250 m cell centres, clipped to sampled land, combined with other exclusions, then connected-area size filtering is rerun. The comparison holds all non-project settings constant, and separates direct overlap from further minimum-size fragmentation loss.
+Remaining land means passing the screen after selected estimated project allowances. It does not establish absence of projects, land availability, planning eligibility or deliverable capacity. The workbook snapshot is used as supplied, not checked for current site status. Geography, project centre locations, missing fields, source coverage and layout-shape assumptions limit the result. The embedded project methodology and this update supersede earlier statements that existing projects have not been represented.
+Updated GB default: The GB baseline is 44.1% before project allowances and 43.3% after all three groups are excluded. The reduction comprises about 1,902 km² of direct overlap and 44 km² of further loss below the minimum size. The live comparison reflects your current settings. Remaining area 99,590.6875 km².
+One supplied point (Tilbury Docks, REPD 3982) is outside a sampled country-mask cell. Its coordinate is retained without snapping, and its estimated circle is intersected with the land mask normally. This reflects a source/sampling caveat, not a verified location correction.
